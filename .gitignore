@@ -9,6 +9,7 @@
 /coverage
 
 # production
+.history
 .env
 
 # misc
