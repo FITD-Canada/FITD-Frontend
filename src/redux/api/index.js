@@ -15,7 +15,10 @@ API.interceptors.request.use((req) => {
 const signIn = async (formData) => {
     const { email, password, token } = formData;
     if (token) {
-        return await API.post('/api/user/google', { token });
+        return await API.post('/api/user/google', { token },
+            {
+                withCredentials: true,
+            });
     } else {
         return await API.post(
             '/api/user/login',

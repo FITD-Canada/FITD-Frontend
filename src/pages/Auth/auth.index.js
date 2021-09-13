@@ -39,8 +39,8 @@ const SignUp = () => {
   const { loading, authData, err } = useSelector(state => state.authReducer);
   const isValid =
     formData.password === formData.confirmPassword &&
-    formData.password !== '' &&
-    formData.confirmPassword !== ''
+      formData.password !== '' &&
+      formData.confirmPassword !== ''
       ? true
       : false;
   const nameRegEx = /^[a-zA-Z]+$/;
@@ -101,6 +101,7 @@ const SignUp = () => {
     dispatch(actionClear());
   }, [dispatch, isSignup]);
 
+  console.log("process.env.REACT_APP_CLIENT_ID: ", process.env.REACT_APP_CLIENT_ID)
   return (
     <>
       {!userInfo ? (
@@ -167,29 +168,29 @@ const SignUp = () => {
               >
                 {isSignup ? 'Sign Up' : 'Sign In'}
               </Button>
-              {/* <Grid item>
-                                    {!isSignup && (
-                                        <GoogleLogin
-                                            clientId={process.env.REACT_APP_CLIENT_ID}
-                                            render={(renderProps) => (
-                                                <Button
-                                                    className={classes.googleButton}
-                                                    color='primary'
-                                                    fullWidth
-                                                    onClick={renderProps.onClick}
-                                                    disabled={renderProps.disabled}
-                                                    startIcon={<AuthIcon />}
-                                                    variant='contained'
-                                                >
-                                                    Sign in with Google
-                                                </Button>
-                                            )}
-                                            onSuccess={googleSuccess}
-                                            onFailure={googleError}
-                                            cookiePolicy='single_host_origin'
-                                        />
-                                    )}
-                                </Grid> */}
+              <Grid item>
+                {!isSignup && (
+                  <GoogleLogin
+                    clientId={process.env.REACT_APP_CLIENT_ID}
+                    render={(renderProps) => (
+                      <Button
+                        className={classes.googleButton}
+                        color='primary'
+                        fullWidth
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                        startIcon={<AuthIcon />}
+                        variant='contained'
+                      >
+                        Sign in with Google
+                      </Button>
+                    )}
+                    onSuccess={googleSuccess}
+                    onFailure={googleError}
+                    cookiePolicy='single_host_origin'
+                  />
+                )}
+              </Grid>
               <Grid container justify="flex-end">
                 <Grid item>
                   <Button onClick={switchMode}>
