@@ -8,19 +8,21 @@ import sagaApproveApplication from './sagaApproveApplication';
 import sagaAddContent from './sagaAddContent';
 import sagaGetCoaches from './sagaGetCoaches';
 import sagaAddUserSchedule from './sagaAddUserSchedule';
+import sagaDeleteUser from './sagaDeleteUser';
 
 function* rootSaga() {
-	yield all([
-		fork(sagaAuth),
-		fork(sagaForgotPwd),
-		fork(sagaResetPwd),
-		fork(sagaNewCoach),
-		fork(sagaGetUsers),
-		fork(sagaGetCoaches),
-		fork(sagaApproveApplication),
-		fork(sagaAddContent),
-		fork(sagaAddUserSchedule),
-	]);
+  yield all([
+    fork(sagaAuth),
+    fork(sagaForgotPwd),
+    fork(sagaResetPwd),
+    fork(sagaNewCoach),
+    fork(sagaGetUsers),
+    fork(sagaGetCoaches),
+    fork(sagaApproveApplication),
+    fork(sagaAddContent),
+    fork(sagaAddUserSchedule),
+    fork(sagaDeleteUser),
+  ]);
 }
 
 export default rootSaga;
