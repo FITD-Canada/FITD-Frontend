@@ -3,6 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { deepOrange } from '@material-ui/core/colors';
 
 export default makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
     appBar: {
         borderRadius: 15,
         margin: '30px 0',

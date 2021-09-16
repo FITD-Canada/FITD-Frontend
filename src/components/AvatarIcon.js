@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Toolbar, Avatar, Button } from '@material-ui/core';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import useStyles from '../libs/AvatarStyle';
 import { Link, useHistory } from 'react-router-dom';
 import { LOGOUT_REQUEST } from '../redux/constants/actionTypes';
@@ -17,9 +19,39 @@ const AvatarIcon = ({ scrollDown }) => {
 	const [user, setUser] = useState(
 		JSON.parse(sessionStorage.getItem('profile'))
 	);
+	const [open, setOpen] = useState(false);
+	const [logout_success, setLogout_success] = useState();
+
+	function Alert(props) {
+		return <MuiAlert elevation={6} variant="filled" {...props} />;
+	}
+	const handleClick = () => {
+		setOpen(true);
+	};
+
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setOpen(false);
+	};
+
 	const logout = () => {
 		dispatch({ type: LOGOUT_REQUEST });
-		history.push('/');
+		//Logout success
+		if (!(JSON.parse(sessionStorage.getItem('profile')))) {
+			history.push('/');
+			setLogout_success(true)
+			handleClick();
+			//Logout fail
+		} else {
+			history.push('/');
+			setLogout_success(false)
+			handleClick();
+		}
+
+
 	};
 
 	useEffect(() => {
@@ -54,12 +86,26 @@ const AvatarIcon = ({ scrollDown }) => {
 					{user.role === 2 && <AdminDropdown scrollDown={scrollDown} />}
 					{user.role === 1 && <CoachDropdown scrollDown={scrollDown} />}
 					{user.role === 0 && <GeneralUserDropdown scrollDown={scrollDown} />}
+					<Snackbar
+						open={open}
+						autoHideDuration={6000}
+						onClose={handleClose}
+						anchorOrigin={{ vertical: 'top', horizontal: 'ceter' }}
+					>
+						{
+							logout_success ? <Alert onClose={handleClose} severity="success">
+								Logout Success!
+							</Alert>
+								: <Alert onClose={handleClose} severity="error">
+									Logout Fail, Something wrong!
+								</Alert>
+						}
+					</Snackbar>
 				</div>
 			) : (
 				<Link
-					className={`avatarButton ${
-						scrollDown ? 'scrolldownBtn' : 'defaultBtn'
-					}`}
+					className={`avatarButton ${scrollDown ? 'scrolldownBtn' : 'defaultBtn'
+						}`}
 					to='/auth'
 				>
 					Get Started

@@ -32,7 +32,7 @@ const authReducer = (state = initialState, action) => {
 				'profile',
 				JSON.stringify({ ...action.payload })
 			);
-			return {};
+			return { sucess: true };
 		case types.LOGOUT_ERROR:
 			return { ...state, loading: true };
 		default:
